@@ -1,4 +1,0 @@
-project(zkdecrypto-lite)
-
-add_executable(zkdecrypto-lite main.cpp)
-

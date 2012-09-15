@@ -1,0 +1,4 @@
+[Project]
+Name=zkdecrypto-lite
+Manager=KDevCMakeManager
+VersionControl=%{VERSIONCONTROLPLUGIN}

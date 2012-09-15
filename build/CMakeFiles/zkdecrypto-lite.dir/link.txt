@@ -1,0 +1,1 @@
+/usr/bin/c++   -g    CMakeFiles/zkdecrypto-lite.dir/main.cpp.o CMakeFiles/zkdecrypto-lite.dir/z340.cpp.o CMakeFiles/zkdecrypto-lite.dir/map.cpp.o CMakeFiles/zkdecrypto-lite.dir/message.cpp.o CMakeFiles/zkdecrypto-lite.dir/strarray.cpp.o CMakeFiles/zkdecrypto-lite.dir/unicode.cpp.o  -o zkdecrypto-lite -rdynamic 

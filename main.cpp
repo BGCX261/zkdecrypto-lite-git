@@ -50,7 +50,7 @@ int main (int argc, char** argv)
     siSolveInfo.disp_all=DispAll;
     siSolveInfo.disp_info=DispInfo;
     siSolveInfo.time_func=TimeFunc;
-    siSolveInfo.get_words=GetWordList;
+    
     sprintf(siSolveInfo.log_name,"/%s","log.txt");
     siSolveInfo.dictionary=&dictionary;
     siSolveInfo.optima_tabu=&tabu_list;
@@ -115,12 +115,12 @@ void Solve()
 void DispAll()
 {
     SetDlgInfo();
-    SetWordList();
+    
 }
 
 void DispInfo()
 {
-    SetSolve();
+    
 }
 
 void LetterDist(int target)
@@ -158,7 +158,7 @@ void InitKey()
     int cur_sel, num_symbols;
     SYMBOL symbol;
 
-    SetText();
+    
 
     if(iCurTab!=0) return;
 

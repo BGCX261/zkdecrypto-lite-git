@@ -33,11 +33,7 @@ void NewMessageInfo(char *filename)
 	//setup window
 	bUndo=false;
 		
-	SetTitle();
-	SetCipher();
-	SetPatterns();
-	SetContactTabInfo();
-	SetDlgInfo(); SetKeyEdit();
+	
 
 	//block size
 	int max_block=message.GetLength();

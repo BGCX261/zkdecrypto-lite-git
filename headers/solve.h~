@@ -13,25 +13,12 @@ void SetUndo()
 
 void Undo()
 {
-	bUndo=false;
-	redo_message=message;
-	message=undo_message;
-	redo_line_size=iLineChars;
-	SetLineChars(undo_line_size);
-	SetPatterns();
-	SetContactTabInfo();
-	SetKeyEdit();
+
 }
 
 void Redo()
 {
-	bUndo=true;
-	undo_message=message;
-	message=redo_message;
-	SetLineChars(redo_line_size);
-	SetPatterns();
-	SetContactTabInfo();
-	SetKeyEdit();
+
 }
 
 //change letter mapped to symbol
@@ -222,8 +209,6 @@ int FindSolution()
 void StartSolve()
 {
 	siSolveInfo.running=true;
-	MsgEnable(false);
-	MapEnable(false);
 	FindSolution();
 }
 

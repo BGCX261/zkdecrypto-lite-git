@@ -32,8 +32,6 @@ void NewMessageInfo(char *filename)
 
 	//setup window
 	bUndo=false;
-	MsgEnable(true);
-	MapEnable(false);
 		
 	SetTitle();
 	SetCipher();
@@ -95,7 +93,7 @@ int LoadMap(char *filename)
 
 	//setup window
 	bUndo=false;
-	MapEnable(true);
+	
 	SetDlgInfo();
 
 	return 1;

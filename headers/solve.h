@@ -13,25 +13,12 @@ void SetUndo()
 
 void Undo()
 {
-	bUndo=false;
-	redo_message=message;
-	message=undo_message;
-	redo_line_size=iLineChars;
-	SetLineChars(undo_line_size);
-	SetPatterns();
-	SetContactTabInfo();
-	SetKeyEdit();
+
 }
 
 void Redo()
 {
-	bUndo=true;
-	undo_message=message;
-	message=redo_message;
-	SetLineChars(redo_line_size);
-	SetPatterns();
-	SetContactTabInfo();
-	SetKeyEdit();
+
 }
 
 //change letter mapped to symbol
@@ -105,7 +92,6 @@ void BatchBest()
 	best_msg=message;
 	best_msg.cur_map.FromKey(lprgcBatchBestKey);
 	BreakText(szPlainText,best_msg.GetPlain());
-	SetClipboardText(szPlainText);
 	
 	delete[] szPlainText;
 }

@@ -6,8 +6,8 @@ BuildDirs=/home/solver/projects/zkdecrypto-lite/build
 CMakeDir=/usr/share/cmake/Modules
 Current CMake Binary=file:///usr/bin/cmake
 CurrentBuildDir=file:///home/solver/projects/zkdecrypto-lite/build
-CurrentBuildType=Debug
-CurrentInstallDir=
+CurrentBuildType=Release
+CurrentInstallDir=file:///usr/local
 Extra Arguments=
 ProjectRootRelative=./
 

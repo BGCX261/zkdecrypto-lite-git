@@ -4,60 +4,6 @@
 
 #include "display.h"
 
-void SetUndo()
-{
-	bUndo=true;
-	undo_message+=message;
-	undo_line_size=iLineChars;
-}
-
-void Undo()
-{
-
-}
-
-void Redo()
-{
-
-}
-
-//change letter mapped to symbol
-void ChangePlain()
-{
-#if 0
-	SYMBOL symbol;
-	DIGRAPH digraph;
-
-	if(iCurSymbol<0) return;
-	
-	GetDlgItemText(hMainWnd,IDC_MAP_VALUE,szText,10); //get new letter
-
-	//get and update symbol
-	if(DIGRAPH_MODE) 
-	{
-		message.digraph_map.GetDigraph(iCurSymbol,&digraph);
-		digraph.plain1=szText[0];
-		digraph.plain2=szText[1];
-		message.digraph_map.AddDigraph(digraph,0);
-		UpdateDigraph(iCurSymbol);
-	}
-
-	else 
-	{
-		message.cur_map.GetSymbol(iCurSymbol,&symbol);
-		symbol.plain=szText[0];
-		message.cur_map.AddSymbol(symbol,0);
-		UpdateSymbol(iCurSymbol);
-	}
-
-	//update info
-	message.Decode(); 
-	SetPlain(); SetText();
-	SetTable(); SetFreq();
-	SetWordList();
-#endif
-}
-
 /*Solver Functions*/
 
 
@@ -78,22 +24,6 @@ char FirstAvailable(char *exclude)
 			return letter+'A';
 	
 	return 'Z'+1;
-}
-
-void BatchBest()
-{
-	char *szPlainText;
-	
-	Message best_msg;
-	
-	szPlainText=new char[message.GetLength()+((iLines+1)*3)+1];
-	BreakText(szPlainText,message.GetPlain());
-	
-	best_msg=message;
-	best_msg.cur_map.FromKey(lprgcBatchBestKey);
-	BreakText(szPlainText,best_msg.GetPlain());
-	
-	delete[] szPlainText;
 }
 
 void StopNotify()
@@ -189,12 +119,6 @@ int FindSolution()
 		
 		hillclimb(message,message.GetCipher(),message.GetLength(),key,false);
 	}
-	else 
-	{
-		message.InitKeys();
-		message.GetKey(key,szExtraLtr);
- 		hillclimb2(message,iSolveType,key,iLineChars);
-	}
 
 	StopSolve(); //reset window state
 	
@@ -217,7 +141,7 @@ void Reset() //init solve info
 	siSolveInfo.cur_tabu=0;
 	siSolveInfo.last_time=0;
 	siSolveInfo.best_score=0;
-	SetDlgInfo();
+	//SetDlgInfo();
 	tabu_list.clear();
 }
 
@@ -296,14 +220,4 @@ void SetLanguage()
 	GetUnigraphs(unigraphs);
 	message.cur_map.SetUnigraphs(unigraphs);
 	message.SetExpFreq();
-}
-
-int ToggleLock()
-{
-	return -1;
-}
-
-void LockWord(int lock)
-{
-	
 }

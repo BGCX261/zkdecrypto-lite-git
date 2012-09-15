@@ -86,6 +86,8 @@ ctime
 message.h
 /home/solver/projects/zkdecrypto-lite/headers/message.h
 
+/home/solver/projects/zkdecrypto-lite/headers/z340Globals.h
+
 /home/solver/projects/zkdecrypto-lite/headers/zodiac.h
 map.h
 /home/solver/projects/zkdecrypto-lite/headers/map.h
@@ -113,4 +115,12 @@ headers/solve.h
 /home/solver/projects/zkdecrypto-lite/headers/solve.h
 headers/files.h
 /home/solver/projects/zkdecrypto-lite/headers/files.h
+
+/home/solver/projects/zkdecrypto-lite/z340.cpp
+headers/z340.h
+/home/solver/projects/zkdecrypto-lite/headers/z340.h
+headers/z340Globals.h
+/home/solver/projects/zkdecrypto-lite/headers/z340Globals.h
+headers/strarray.h
+/home/solver/projects/zkdecrypto-lite/headers/strarray.h
 

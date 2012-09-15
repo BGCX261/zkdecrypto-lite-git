@@ -1,3 +1,32 @@
+//  Copyright (C) 2012 Brax Sisco, Wesley Hopper, Michael Eaton, 
+//	Daniels Umanovskis
+//
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License along
+//    with this program; if not, write to the Free Software Foundation, Inc.,
+//    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//
+
+/************************************************************
+ * This program is a lightweight, command-line hacked
+ * derivation of the 2010 version of ZKDecrypto.
+ * 
+ * The use of the GNU GPL for this program does not imply
+ * support for the Free Software Foundation or that
+ * the authors are in any way related to the Free Software
+ * Foundation
+ * 
+ ************************************************************/
+
 #include <stdio.h>
 #include <ctime>
 #include <math.h>
@@ -13,9 +42,6 @@ void InitKey();
 
 int initCount[26];
 
-unsigned long TimeFunc() {
-    return 42;
-}
 
 int main (int argc, char** argv)
 {
@@ -49,7 +75,6 @@ int main (int argc, char** argv)
     siSolveInfo.max_tol=40;
     siSolveInfo.disp_all=DispAll;
     siSolveInfo.disp_info=DispInfo;
-    siSolveInfo.time_func=TimeFunc;
     
     sprintf(siSolveInfo.log_name,"/%s","log.txt");
     siSolveInfo.dictionary=&dictionary;
@@ -87,7 +112,6 @@ int main (int argc, char** argv)
 
     //language
     iLang=0;
-    LoadCribs();
     LoadINI();
     SetLanguage();
 
@@ -97,7 +121,7 @@ int main (int argc, char** argv)
     //sovle parameters
     message.SetBlockSize(1);
 
-    SetSolveTypeFeatures();
+    //SetSolveTypeFeatures();
 
     //HERE - instead of message loop, immediately start solving
     InitKey();
@@ -114,7 +138,7 @@ void Solve()
 
 void DispAll()
 {
-    SetDlgInfo();
+    //SetDlgInfo();
     
 }
 

@@ -72,7 +72,6 @@ struct SOLVEINFO
 	int score_limit;
 	int iteration_limit;
 	int time_limit;
-	clock_t start_time;
 	
 	//callback functions
 	void (*disp_all)(void);
@@ -89,7 +88,6 @@ int				calcscore(Message&,const int,const char *);
 inline void		shufflekey(char *,const int,const int);
 
 int				hillclimb(Message&,const char *,int,char *,int);
-int				hillclimb2(Message&,int,char*,int);
 void			running_key(Message&,char*);
 void			dictionary_vigenere(Message&);
 
@@ -98,4 +96,4 @@ int 			ReadNGraphs(const char*,int);
 int 			WordPlug(Message&,const char*);
 
 void			SetInfo(SOLVEINFO*);
-int elapsedTime(int);
+int elapsedTime();

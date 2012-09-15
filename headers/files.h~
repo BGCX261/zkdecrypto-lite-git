@@ -33,12 +33,6 @@ void NewMessageInfo(char *filename)
 	//setup window
 	bUndo=false;
 		
-	SetTitle();
-	SetCipher();
-	SetPatterns();
-	SetContactTabInfo();
-	SetDlgInfo(); SetKeyEdit();
-
 	//block size
 	int max_block=message.GetLength();
 	if(iSolveType==SOLVE_DBLPLAY) max_block>>=1;
@@ -58,7 +52,7 @@ int LoadMessage(char *filename, int type)
 
 	if(loaderror) //error loading file
 	{
-		printf("Cannot open %s",(const char*)filename);
+		printf("Cannot open message file: %s",(const char*)filename);
 		return 0;
 	}
 
@@ -96,40 +90,6 @@ int LoadMap(char *filename)
 	
 	SetDlgInfo();
 
-	return 1;
-}
-
-//save plaintext to file/clipboard
-int SavePlain(char *filename)
-{
-	return 1;
-}
-
-//load zodiac font zkdfont.ttf
-int LoadFONT()
-{
-	return 1;
-}
-
-//remove zodiac font zkdfont.ttf
-int RemoveFONT()
-{
-	return 1;
-}
-
-//read cribs text file
-void LoadCribs()
-{
-	
-}
-
-int LoadTabu(char *filename)
-{
-	return 1;
-}
-
-int SaveTabu(char *filename)
-{
 	return 1;
 }
 

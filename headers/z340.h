@@ -88,7 +88,6 @@ int				calcscore(Message&,const int,const char *);
 inline void		shufflekey(char *,const int,const int);
 
 int				hillclimb(Message&,const char *,int,char *,int);
-int				hillclimb2(Message&,int,char*,int);
 void			running_key(Message&,char*);
 void			dictionary_vigenere(Message&);
 

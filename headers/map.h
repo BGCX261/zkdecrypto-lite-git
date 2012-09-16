@@ -22,8 +22,6 @@
 
 #define MAX_GRA_ROW 35
 
-#pragma warning( disable : 4996)  //STOP MSVS2005 WARNINGS
-
 
 struct CONTACT
 {
@@ -34,7 +32,7 @@ struct CONTACT
 struct SYMBOL
 {
 	char cipher;
-	char plain; 
+	char plain;
 	int freq;
 	char exclude[27];
 
@@ -72,7 +70,7 @@ public:
 	long GetExclusions(wchar*,int);
 
 	void MergeSymbols(char,char);
-	
+
 	void ToKey(char*,char*);
 	void FromKey(const char*);
 
@@ -81,7 +79,7 @@ public:
 	void ToggleLock(int index) {locked[index]=!locked[index];}
 	void SetAllLock(int lock) {memset(locked,lock,num_symbols);}
 	const char* GetLocked() {return locked;}
-	
+
 	void GetDecoder(char *decoder)
 	{
 		for(int cur_symbol=0; cur_symbol<num_symbols; cur_symbol++)
@@ -93,9 +91,9 @@ public:
 	}
 
 	//set this map equal to another
-	void operator = (Map &src_map) 
+	void operator = (Map &src_map)
 	{
-		num_symbols=src_map.num_symbols; 
+		num_symbols=src_map.num_symbols;
 		memcpy(symbols,src_map.symbols,num_symbols*sizeof(SYMBOL));
 		memcpy(locked,src_map.locked,num_symbols);
 		strcpy(merge_log,src_map.merge_log);
@@ -110,15 +108,15 @@ public:
 			int symbol=src_map.FindByCipher(symbols[cur_symbol].cipher);
 
 			//if it is, set it the copy map's symbol
-			if(symbol!=-1) 
+			if(symbol!=-1)
 			{
 				AddSymbol(src_map.symbols[symbol],0);
 				locked[symbol]=src_map.locked[symbol];
 			}
 		}
 	}
-	
-private:	
+
+private:
 	SYMBOL symbols[MAX_SYM];
 	char locked[MAX_SYM], merge_log[512];
 	int num_symbols;
@@ -160,9 +158,9 @@ public:
 	void FromKey(const char*);
 
 	//set this map equal to another
-	void operator = (DiMap &src_dimap) 
+	void operator = (DiMap &src_dimap)
 	{
-		num_digraphs=src_dimap.num_digraphs; 
+		num_digraphs=src_dimap.num_digraphs;
 		memcpy(digraphs,src_dimap.digraphs,num_digraphs*sizeof(DIGRAPH));
 		memcpy(locked,src_dimap.locked,num_digraphs);
 	}

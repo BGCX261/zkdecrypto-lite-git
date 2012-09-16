@@ -1,4 +1,4 @@
-//  Copyright (C) 2012 Brax Sisco, Wesley Hopper, Michael Eaton, 
+//  Copyright (C) 2012 Brax Sisco, Wesley Hopper, Michael Eaton,
 //	Daniels Umanovskis
 //
 //    This program is free software; you can redistribute it and/or modify
@@ -19,12 +19,12 @@
 /************************************************************
  * This program is a lightweight, command-line hacked
  * derivation of the 2010 version of ZKDecrypto.
- * 
+ *
  * The use of the GNU GPL for this program does not imply
  * support for the Free Software Foundation or that
  * the authors are in any way related to the Free Software
  * Foundation
- * 
+ *
  ************************************************************/
 
 #include <stdio.h>
@@ -45,8 +45,6 @@ int initCount[26];
 
 int main (int argc, char** argv)
 {
-    char filename[1024];
-
     if (argc != 2 && argc != 4)
     {
         printf("Usage:\n");
@@ -61,11 +59,8 @@ int main (int argc, char** argv)
     srand(time(0));
 
     /*setup directories*/
-    char* cipherDir = "/cipher";
-    char* keyDir = "/key";
 
-    StopSolve(); //clean GUI stuff out of that function
-    //SetSort(0); //will not need
+    StopSolve();
 
     memset(&siSolveInfo,0,sizeof(SOLVEINFO));
     siSolveInfo.ioc_weight=siSolveInfo.ent_weight=siSolveInfo.chi_weight=5;
@@ -75,7 +70,7 @@ int main (int argc, char** argv)
     siSolveInfo.max_tol=40;
     siSolveInfo.disp_all=DispAll;
     siSolveInfo.disp_info=DispInfo;
-    
+
     sprintf(siSolveInfo.log_name,"/%s","log.txt");
     siSolveInfo.dictionary=&dictionary;
     siSolveInfo.optima_tabu=&tabu_list;
@@ -115,15 +110,12 @@ int main (int argc, char** argv)
     LoadINI();
     SetLanguage();
 
-    /*if(DIGRAPH_MODE) SendDlgItemMessage(hMainWnd,IDC_MAP_VALUE,EM_LIMITTEXT,2,0);
-    else SendDlgItemMessage(hMainWnd,IDC_MAP_VALUE,EM_LIMITTEXT,1,0);*/
 
     //sovle parameters
     message.SetBlockSize(1);
 
     //SetSolveTypeFeatures();
 
-    //HERE - instead of message loop, immediately start solving
     InitKey();
 
     Solve();
@@ -139,12 +131,12 @@ void Solve()
 void DispAll()
 {
     //SetDlgInfo();
-    
+
 }
 
 void DispInfo()
 {
-    
+
 }
 
 void LetterDist(int target)
@@ -182,7 +174,7 @@ void InitKey()
     int cur_sel, num_symbols;
     SYMBOL symbol;
 
-    
+
 
     if(iCurTab!=0) return;
 

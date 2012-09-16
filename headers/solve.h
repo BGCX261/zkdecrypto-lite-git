@@ -1,12 +1,3 @@
-#pragma warning( disable : 4267)	// STOP MSVS2005 WARNINGS
-
-/*Edit Functions*/
-
-#include "display.h"
-
-/*Solver Functions*/
-
-
 //reset window state when solve stops
 void StopSolve()
 {
@@ -22,7 +13,7 @@ char FirstAvailable(char *exclude)
 	for(int letter=0; letter<26; letter++)
 		if(!strchr(exclude,letter+'A'))
 			return letter+'A';
-	
+
 	return 'Z'+1;
 }
 
@@ -34,7 +25,7 @@ void StopNotify()
 		iBatchBestScore=siSolveInfo.best_score;
 		strcpy(lprgcBatchBestKey,siSolveInfo.best_key);
 	}
-	
+
 	/*if(iBruteSymbols>0) BruteNext(iBruteSymbols-1); //in brute
 	if(iBruteSymbols<0) //brute finished, display best
 	{
@@ -81,30 +72,28 @@ int StripWS(char *string)
 }
 
 //solve thread proc
-int FindSolution() 
+int FindSolution()
 {
 	int num_symbols;
 	char key[4096];
-	char *exclude=NULL, *key_text;
+	char *exclude=NULL;
 	SYMBOL symbol;
-	FILE *key_file;
-	int key_text_size;
-	
+
 	if(!bMsgLoaded) return 0;
-	
+
 
 
 	if(iSolveType==SOLVE_HOMO)
 	{
 		num_symbols=message.cur_map.GetNumSymbols();
-		
+
 		//if best key is blank, set it to empty symbols + extra letters
-		if(!strlen(siSolveInfo.best_key)) 
+		if(!strlen(siSolveInfo.best_key))
 			message.cur_map.ToKey(siSolveInfo.best_key,szExtraLtr);
-		
+
 		//key=program map + additional chars of best key
 		message.cur_map.ToKey(key,siSolveInfo.best_key+num_symbols);
-		
+
 		//setup exclude list
 		exclude=new char[27*num_symbols];
 
@@ -113,17 +102,17 @@ int FindSolution()
 			message.cur_map.GetSymbol(cur_symbol,&symbol);
 			strcpy(exclude+(27*cur_symbol),symbol.exclude);
 		}
-		
+
 		siSolveInfo.locked=(char*)message.cur_map.GetLocked();
 		siSolveInfo.exclude=exclude;
-		
+
 		hillclimb(message,message.GetCipher(),message.GetLength(),key,false);
 	}
 
 	StopSolve(); //reset window state
-	
+
 	if(exclude) delete[] exclude;
-	
+
 	StopNotify();
 	return 0;
 }
@@ -155,16 +144,16 @@ int LoadDictionary(char *filename, int show_error)
 	dictionary_file=fopen(filename,"r");
 
 	if(!dictionary_file)
-	{	
+	{
 		printf("Failed to open %s\n", filename);
 	}
 
-	for(int i=0; !feof(dictionary_file); i++) 
+	for(int i=0; !feof(dictionary_file); i++)
 	{
 		fscanf(dictionary_file,"%s",word);
-		for (int i = 0; i < strlen(word); i++)
+		for (int j = 0; j < strlen(word); j++)
 		{
-		  if (word[i] >= 97 && word[i] <= 122) word[i] -= 32;
+		  if (word[j] >= 97 && word[j] <= 122) word[j] -= 32;
 		}
 		word_str=word;
 		dictionary[word_str]=i;
@@ -192,7 +181,7 @@ void SetLanguage()
 	siSolveInfo.lang_dioc=(float)DIOC;
 	siSolveInfo.lang_chi=(float)CHI;
 	siSolveInfo.lang_ent=(float)ENT;
-	
+
 	for(int n=1; n<=5; n++)
 	{
 		if(n==1)  strcpy(szGraphBase,"unigraphs.txt");
@@ -200,7 +189,7 @@ void SetLanguage()
 		if(n==3)  strcpy(szGraphBase,"trigraphs.txt");
 		if(n==4)  strcpy(szGraphBase,"tetragraphs.txt");
 		if(n==5)  strcpy(szGraphBase,"pentagraphs.txt");
-		
+
 		sprintf(szGraphName,"%s/%s/%s",LANG_DIR,szLang,szGraphBase);
 
 		if(!ReadNGraphs(szGraphName,n))
@@ -216,7 +205,7 @@ void SetLanguage()
 	sprintf(szGraphName,"%s/%s/%s",LANG_DIR,szLang,"userdict.txt");
 	LoadDictionary(szGraphName,false);
 	siSolveInfo.dict_words=dictionary.size();
-	
+
 	GetUnigraphs(unigraphs);
 	message.cur_map.SetUnigraphs(unigraphs);
 	message.SetExpFreq();

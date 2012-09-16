@@ -1,6 +1,6 @@
 /*File Functions*/
 
-void GetBaseName(const char *filename, char *&basename) 
+void GetBaseName(const char *filename, char *&basename)
 {
 	if(filename[0]!='\0') basename=(char*)strrchr(filename,'\\')+1;
 	else basename=NULL;
@@ -32,7 +32,7 @@ void NewMessageInfo(char *filename)
 
 	//setup window
 	bUndo=false;
-		
+
 	//block size
 	int max_block=message.GetLength();
 	if(iSolveType==SOLVE_DBLPLAY) max_block>>=1;
@@ -44,11 +44,7 @@ int LoadMessage(char *filename, int type)
 {
 	int loaderror=false;
 
-	switch(type) 
-	{
-		case 0: if(!message.Read(filename)) loaderror=true; break; //read as ascii
-		case 1: if(!message.ReadNumeric(filename)) loaderror=true; break; //read as numeric
-	}
+	if(!message.Read(filename)) loaderror=true;
 
 	if(loaderror) //error loading file
 	{
@@ -64,7 +60,7 @@ int LoadMessage(char *filename, int type)
 int LoadMap(char *filename)
 {
 	//Map temp_map;
-	
+
 	if(!message.cur_map.Read(filename))
 	{
 		printf("Cannot open %s",filename);
@@ -72,7 +68,7 @@ int LoadMap(char *filename)
 	}
 
 	siSolveInfo.best_key[0]='\0';
-	
+
 	//update symbols from loaded map
 	//message.cur_map+=temp_map;
 
@@ -87,7 +83,7 @@ int LoadMap(char *filename)
 
 	//setup window
 	bUndo=false;
-	
+
 	//SetDlgInfo();
 
 	return 1;
@@ -113,7 +109,7 @@ int LoadINI()
 		comment=strchr(option,'#'); if(comment) *comment='\0';
 		comment=strchr(option,'#'); if(comment) *comment='\0';
 
-		
+
 		if(!strcasecmp(option,"cipher")) strcpy(szCipherName,value);
 		else if(!strcasecmp(option,"key")) strcpy(szKeyName,value);
 		else if(!strcasecmp(option,"plain")) strcpy(szPlainName,value);
@@ -123,8 +119,6 @@ int LoadINI()
 		else if(!strcasecmp(option,"lang")) iLang=atoi(value);
 		else if(!strcasecmp(option,"extra")) {if(value[0]=='*') value[0]='\0'; strcpy(szExtraLtr,value);}
 		else if(!strcasecmp(option,"solve")) iSolveType=atoi(value);
-		else if(!strcasecmp(option,"key_len")) message.SetKeyLength(atoi(value));
-		else if(!strcasecmp(option,"tableu_alpha")) {message.SetTableuAlphabet(value);}
 	}
 
 	fclose(ini_file);

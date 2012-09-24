@@ -19,7 +19,6 @@ class StringArray
 		int AddString(const char*);
 		int DeleteString(int);
 		int GetString(int,char*);
-		int SortString(int);
 		void SortStrings(int);
 		int RemoveDups();
 		int Intersect(char*,float);
@@ -32,17 +31,12 @@ class StringArray
 };
 
 int ChrIndex(const char*,char);
-int RadixSort(char*);
 int GetUniques(const char*, char*, int*);
 float IoC(const char*,int);
 float DIoC(const char*,int,int);
-float Entropy(const char*,int);
-float ChiSquare(const char*,int);
 float avg_lsoc(const char*,int);
 void Transform(char*,unsigned long*,int);
 void Reverse(char*);
-void FlipHorz(unsigned long*,int&,int,int);
-void FlipVert(unsigned long*,int&,int,int);
 
 #endif
 

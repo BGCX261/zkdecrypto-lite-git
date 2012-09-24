@@ -11,18 +11,18 @@
 #include		<math.h>
 #include		<map>
 #include		<string>
-#include <ctime>
+#include 		<ctime>
 #include		"message.h"
 
 ///////////////
 /// DEFINES ///
 ///////////////
 
-#define		ASCII_SIZE 					256
-#define		KEY_SIZE					512
+#define		ASCII_SIZE 		256
+#define		KEY_SIZE		512
 
-#define UNI_SIZE	26			//26
-#define BI_SIZE		676			//26*26
+#define UNI_SIZE	26		//26
+#define BI_SIZE		676		//26*26
 #define TRI_SIZE	17576		//26*26*26
 #define TETRA_SIZE	456976		//26*26*26*26
 #define PENTA_SIZE	11881376	//26*26*26*26*26
@@ -84,12 +84,12 @@ struct SOLVEINFO
 /// FUNCTIONS ///
 /////////////////
 
-int				calcscore(Message&,const int,const char *);
+int			calcscore(Message&,const int,const char *);
 inline void		shufflekey(char *,const int,const int);
 
-int				hillclimb(Message&,const char *,int,char *,int);
-void			running_key(Message&,char*);
-void			dictionary_vigenere(Message&);
+int			hillclimb(Message&,const char *,int,char *,int);
+//void			running_key(Message&,char*);
+//void			dictionary_vigenere(Message&);
 
 void 			GetUnigraphs(double*);
 int 			ReadNGraphs(const char*,int);
@@ -97,3 +97,4 @@ int 			WordPlug(Message&,const char*);
 
 void			SetInfo(SOLVEINFO*);
 int elapsedTime();
+

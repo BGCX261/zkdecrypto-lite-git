@@ -30,12 +30,6 @@ int StringArray::GetString(int string, char *dest_string)
     return (int)strlen(dest_string);
 }
 
-int StringArray::SortString(int string)
-{
-    if(string<0 || string>=num_strings) return 0;
-    return RadixSort(strings[string]);
-}
-
 void StringArray::SortStrings(int order)
 {
     char swap;
@@ -119,35 +113,6 @@ int ChrIndex(const char *string, char chr)
     return int(chr_ptr-string);
 }
 
-int RadixSort(char *string)
-{
-    char array1[4096], array0[4096]; //arrays for the radix sort
-    int num1, num0, mask=1;
-    int length=(int)strlen(string);
-
-    for(int bit=0; bit<8; bit++) //for each bit of the string type
-    {
-        num1=num0=0; //set num of 0's & 1's back to 0
-        for(int index=0; index<length; index++) //for each character in the number array, copy the character to the correct array according to this bit
-        {
-            if(string[index] & mask) {
-                array1[num1]=string[index];    //bit is 1
-                num1++;
-            }
-            else {
-                array0[num0]=string[index];    //bit is 0
-                num0++;
-            }
-        }
-        //Copy the numbers into the number array from the 1's and 0's arrays, 1's first for decreasing; 0's array first for increasing
-        memcpy(string+num0, array1, num1);
-        memcpy(string, array0, num0);
-        mask<<=1; //bitshift mask left for next bit for next bit
-    }
-
-    return 1;
-}
-
 void Reverse(char *string)
 {
     int i, j, size=(int)strlen(string);
@@ -161,44 +126,6 @@ void Transform(char *string, unsigned long *xfm, int num_xfm)
 {
     for(int cur_xfm=0; cur_xfm<num_xfm; cur_xfm++)
         std::swap(string[xfm[cur_xfm]>>16],string[xfm[cur_xfm]&0xFFFF]);
-}
-
-void SwapRows(unsigned long *xfm, int &num_xfm, int str_len, int row_len, int row_a, int row_b)
-{
-    for(int cur_col=0; cur_col<row_len; cur_col++)
-    {
-        int index1=(row_a*row_len)+cur_col;
-        int index2=(row_b*row_len)+cur_col;
-        if(index1>=str_len || index2>=str_len) continue;
-        xfm[num_xfm++]=index1<<16 | index2;
-    }
-}
-
-void SwapCols(unsigned long *xfm, int &num_xfm, int str_len, int row_len, int col_a, int col_b)
-{
-    int num_rows=NUM_ROWS(str_len,row_len);
-
-    for(int cur_row=0; cur_row<num_rows; cur_row++)
-    {
-        int index1=(cur_row*row_len)+col_a;
-        int index2=(cur_row*row_len)+col_b;
-        if(index1>=str_len || index2>=str_len) continue;
-        xfm[num_xfm++]=index1<<16 | index2;
-    }
-}
-
-void FlipHorz(unsigned long *xfm, int &num_xfm, int str_len, int row_len)
-{
-    for(int cur_col=0; cur_col<(row_len>>1); cur_col++)
-        SwapCols(xfm,num_xfm,str_len,row_len,cur_col,row_len-cur_col-1);
-}
-
-void FlipVert(unsigned long *xfm, int &num_xfm, int str_len, int row_len)
-{
-    int num_rows=NUM_ROWS(str_len,row_len);
-
-    for(int cur_row=0; cur_row<(num_rows>>1); cur_row++)
-        SwapRows(xfm,num_xfm,str_len,row_len,cur_row,num_rows-cur_row-1);
 }
 
 //count frequencies of chars in a string
@@ -265,74 +192,4 @@ float DIoC(const char* string, int length, int step)
 
     return ic;
 }
-
-float Entropy(const char *string, int length)
-{
-    int freqs[256], index;
-    float entropy=0, prob_mass;
-
-    memset(freqs,0,1024);
-
-    for(index=0; index<length; index++) //frequency table
-        freqs[(unsigned char)string[index]]++;
-
-    for(index=32; index<256; index++) //calculate entropy
-    {
-        if(!freqs[index]) continue;
-        prob_mass=float(freqs[index])/length;
-        entropy+=prob_mass*(log(prob_mass)/LOG2);
-    }
-
-    if(entropy==0.0) return entropy;
-    return (-1*entropy);
-}
-
-float ChiSquare(const char *string, int length)
-{
-    int freqs[256], index, unique=0;
-    float chi2=0, prob_mass, cur_calc;
-
-    memset(freqs,0,1024);
-
-    for(index=0; index<length; index++) //frequency table, and uniques
-    {
-        if(!freqs[(unsigned char)string[index]]) unique++;
-        freqs[(unsigned char)string[index]]++;
-    }
-
-    prob_mass=float(length)/unique;
-
-    for(index=32; index<256; index++) //calculate chi2
-    {
-        if(!freqs[index]) continue;
-        cur_calc=freqs[index]-prob_mass;
-        cur_calc*=cur_calc;
-        cur_calc/=prob_mass;
-        chi2+=cur_calc;
-    }
-
-    return chi2/length;
-}
-/*
-float avg_lsoc(const char *string, int length)
-{
-	int total_clusters=0, cur_length=0, total_length=0;
-
-	for(int index=0; index<length; index++)
-	{
-		//end of cluster
-		if(string[index]=='A' || string[index]=='E'  || string[index]=='I' || string[index]=='O'  || string[index]=='U')
-		{
-			if(index) total_clusters++;
-			total_length+=cur_length;
-			cur_length=0;
-		}
-
-		else cur_length++;
-	}
-
-	if(!total_clusters) return 0.0;
-
-	return float(total_length)/total_clusters;
-}*/
 

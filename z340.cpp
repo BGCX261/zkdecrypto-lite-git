@@ -407,15 +407,6 @@ int calcscore(Message &msg, const int length_of_cipher,const char *solv)
 
     score=pentascore+(tetrascore>>1)+(triscore>>2)+(biscore>>3);
 
-    /*int actfreq[26], expfreq[26], diff=0;
-    msg.GetActFreq(actfreq);
-    msg.GetExpFreq(expfreq);
-
-    for(int cur_ltr=0; cur_ltr<26; cur_ltr++)
-    	diff+=ABS(actfreq[cur_ltr]-expfreq[cur_ltr]);
-
-    score-=diff<<7;*/
-
     //Stats
     GetFreqs(solv,score_len);
 
@@ -423,7 +414,6 @@ int calcscore(Message &msg, const int length_of_cipher,const char *solv)
 
     if(info->dioc_weight) //DIC, EDIC
     {
-        //score_mult*=1.05-((info->dioc_weight>>1)*ABS(FastDIoC(solv,score_len,1)-info->lang_dioc));
         score_mult*=1.05-((info->dioc_weight>>1)*ABS(FastDIoC(solv,score_len,2)-info->lang_dioc));
     }
 
@@ -434,48 +424,23 @@ int calcscore(Message &msg, const int length_of_cipher,const char *solv)
     for(int cur_crib=0; cur_crib<info->num_cribs; cur_crib++)
         if(strstr(solv,info->cribs[cur_crib])) score_mult*=(float)1.025;
 
-    //info->get_words(solv);
-    //score_mult+=info->num_words/1000.0;
-
     return int(score*score_mult);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-//        Mutate the char array "key[]" by swapping two unlocked, unexcluded letters            //
+//                      Mutate the char array "key[]" by swapping two letters                   //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 inline void shufflekey(char *key,const int keylength,const int cuniq) {
 
-    int x, y, z, canswap=0;
+    int x, y, z;
 
-    //check if all characters are locked to avoid infinite loop
-    for(int symbol=keylength; symbol--;) if(!info->locked[symbol]) {
-            canswap=1;
-            break;
-        }
-
-    if(canswap)
-    {
-        do {
-            x=rand()%keylength;
-        }
-        while(info->locked[x]);
-        do {
-            y=rand()%keylength;
-        }
-        while(info->locked[y]);
-
-        if(info->exclude) //exclusions
-        {
-            if(x<cuniq && strchr(info->exclude+(27*x),key[y])) return;
-            if(y<cuniq && strchr(info->exclude+(27*y),key[x])) return;
-        }
-
+        x=rand()%keylength;
+        y=rand()%keylength;
+ 
         z=key[x];
         key[x]=key[y];
-        key[y]=z;
-    }
-
+        key[y]=z;  
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -49,7 +49,6 @@ public:
 	Map() {num_symbols=0; Clear(CLR_ALL); memset(locked,0,MAX_SYM);}
 
 	int Read(const char*);
-	int Write(const char*);
 	void Clear(int);
 	void Init(int*);
 	void AsCipher();
@@ -63,13 +62,6 @@ public:
 	void SortByFreq();
 	void SetUnigraphs(double *ug) {memcpy(unigraphs,ug,26*sizeof(float));}
 	float GetUnigraph(int letter) {return unigraphs[letter];}
-	void SwapSymbols(int,int);
-	void SymbolTable(char*);
-	long SymbolGraph(wchar*);
-	long GetMergeLog(wchar*);
-	long GetExclusions(wchar*,int);
-
-	void MergeSymbols(char,char);
 
 	void ToKey(char*,char*);
 	void FromKey(const char*);

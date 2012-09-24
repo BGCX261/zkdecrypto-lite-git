@@ -2,78 +2,10 @@
 
 int Map::Read(const char *filename)
 {
-    FILE *mapfile;
-    char map_cipher[256], map_letter[256], map_locked[256], map_exclude[256];
-    int num_symbols, cur_symbol, has_locked=false;
-    SYMBOL symbol;
-
-    if(!(mapfile=fopen(filename,"r"))) return 0;
-
-    //cipher, letters, & locked
-    fscanf(mapfile,"%s\n",&map_cipher);
-    fscanf(mapfile,"%s\n",&map_letter);
-    if(fscanf(mapfile,"%s\n",&map_locked)!=EOF) has_locked=true;
-
-    num_symbols=(int)strlen(map_cipher);
-
-    for(cur_symbol=0; cur_symbol<num_symbols; cur_symbol++)
-    {
-        //blank exclude if not read
-        if(fscanf(mapfile,"%s\n",&map_exclude)==EOF)
-            map_exclude[0]='\0';
-
-        symbol.cipher=map_cipher[cur_symbol];
-        symbol.plain=map_letter[cur_symbol];
-        strcpy(symbol.exclude,map_exclude);
-        AddSymbol(symbol,0);
-
-        if(has_locked) locked[cur_symbol]=map_locked[cur_symbol]-'0';
-        else locked[cur_symbol]=0;
-    }
-
-    fclose(mapfile);
 
     return 1;
 }
 
-int Map::Write(const char *filename)
-{
-    FILE *mapfile;
-    int cur_symbol;
-
-    mapfile=fopen(filename,"w");
-
-    if(!mapfile) return 0;
-
-    //cipher symbols
-    for(cur_symbol=0; cur_symbol<num_symbols; cur_symbol++)
-        putc(symbols[cur_symbol].cipher,mapfile);
-
-    putc('\n',mapfile);
-
-    //letters
-    for(cur_symbol=0; cur_symbol<num_symbols; cur_symbol++)
-    {
-        if(!symbols[cur_symbol].plain) putc(BLANK,mapfile);
-        else putc(symbols[cur_symbol].plain,mapfile);
-    }
-
-    putc('\n',mapfile);
-
-    //locks
-    for(cur_symbol=0; cur_symbol<num_symbols; cur_symbol++)
-        fprintf(mapfile,"%i",locked[cur_symbol]);
-
-    putc('\n',mapfile);
-
-    //exclusions
-    for(cur_symbol=0; cur_symbol<num_symbols; cur_symbol++)
-        fprintf(mapfile,"%s\n",symbols[cur_symbol].exclude);
-
-    fclose(mapfile);
-
-    return 1;
-}
 
 //clear map data, you can | together mode values, or use CLR_ALL
 void Map::Clear(int mode)
@@ -223,36 +155,6 @@ int Map::GetSymbol(int index, SYMBOL *symbol)
     return 1;
 }
 
-//swap the plain text letters for two symbols
-void Map::SwapSymbols(int swap1, int swap2)
-{
-    if(locked[swap1] || locked[swap2]) return;
-    if(strchr(symbols[swap1].exclude,symbols[swap2].plain)) return;
-    if(strchr(symbols[swap2].exclude,symbols[swap1].plain)) return;
-    std::swap(symbols[swap1].plain,symbols[swap2].plain);
-}
-
-//replace all instances of symbol2 with symbol1, reset info
-void Map::MergeSymbols(char symbol1, char symbol2)
-{
-    int index1, index2;
-    char log[3];
-
-    index1=FindByCipher(symbol1);
-    index2=FindByCipher(symbol2);
-
-    num_symbols--;
-    symbols[index1].freq+=symbols[index2].freq;
-    memmove(&symbols[index2],&symbols[index2+1],(num_symbols-index2)*sizeof(SYMBOL));
-    memmove(&locked[index2],&locked[index2+1],num_symbols-index2);
-
-    //append to log
-    sprintf(log,"%c%c",symbol1,symbol2);
-    strcat(merge_log,log);
-
-    SortByFreq();
-}
-
 //sort the symbols in the same order that hillclimber expects
 void Map::SortByFreq()
 {
@@ -287,119 +189,6 @@ void Map::SortByFreq()
         }
     }
     while(next);
-}
-
-//get string for the symbols table
-void Map::SymbolTable(char *dest)
-{
-    SYMBOL symbol;
-    int cur_char=0;
-
-    for(int letter=0; letter<26; letter++)
-    {
-        dest[cur_char++]=letter+'A';
-        dest[cur_char++]=' ';
-
-        for(int cur_symbol=0; cur_symbol<num_symbols; cur_symbol++)
-        {
-            GetSymbol(cur_symbol,&symbol);
-            if(symbol.plain==letter+'A')
-                dest[cur_char++]=symbol.cipher;
-        }
-
-        dest[cur_char++]='\r';
-        dest[cur_char++]='\n';
-    }
-
-    dest[cur_char++]='\0';
-}
-
-long Map::SymbolGraph(wchar *dest)
-{
-    int max, step, rows=0, cur_symbol;
-    int dest_index=0;
-    char level[64];
-
-    max=symbols[0].freq;
-
-    //calculate rows, step
-    step=ROUNDUP(float(max)/MAX_GRA_ROW);
-    max+=step-(max%step);
-
-    dest[0]=0;
-
-    //line numbers and bars
-    for(int row=max; row>0; row-=step)
-    {
-        sprintf(level,"%4i ",row);
-        ustrcat(dest,level);
-        ustrcat(dest,UNI_VERTBAR);
-
-        for(cur_symbol=0; cur_symbol<num_symbols; cur_symbol++)
-        {
-            if(symbols[cur_symbol].freq>=row) ustrcat(dest,UNI_HALFBAR);
-            else ustrcat(dest,0x0020);
-        }
-
-        ustrcat(dest,0x000D);
-        ustrcat(dest,0x000A);
-
-        rows++;
-    }
-
-    //bottom line
-    ustrcat(dest,"     ");
-
-    for(cur_symbol=0; cur_symbol<=num_symbols; cur_symbol++)
-        ustrcat(dest,UNI_HORZBAR);
-
-    //symbols
-    ustrcat(dest,"\r\n      ");
-
-    for(cur_symbol=0; cur_symbol<num_symbols; cur_symbol++)
-        ustrcat(dest,(unsigned char)symbols[cur_symbol].cipher);
-
-    //rows in the high word, cols in the low
-    return (rows+2)<<16 | (num_symbols+8);
-}
-
-long Map::GetMergeLog(wchar *dest)
-{
-    char temp[64];
-    int length;
-
-    length=(int)strlen(merge_log)>>1;
-
-    dest[0]='\0';
-
-    for(int cur_merge=0; cur_merge<length; cur_merge++)
-    {
-        sprintf(temp,"%2i. %c %c\n",cur_merge+1,merge_log[cur_merge<<1],merge_log[(cur_merge<<1)+1]);
-        ustrcat(dest,temp);
-    }
-
-    if(dest[0]=='\0') return 0;
-    else return (length+2)<<16 | 15;
-}
-
-long Map::GetExclusions(wchar *dest, int num_cols)
-{
-    char temp[64];
-    int rows=0, col=0;
-
-    dest[0]='\0';
-
-    for(int cur_symbol=0; cur_symbol<num_symbols; cur_symbol++)
-    {
-        if(symbols[cur_symbol].exclude[0]!=0) {
-            sprintf(temp,"%c  %-26s  \r\n",symbols[cur_symbol].cipher,symbols[cur_symbol].exclude);
-            ustrcat(dest,temp);
-            col++;
-        }
-    }
-
-//	return ((rows<<1)+2)<<16 | (num_cols*32);
-    return (long)col;
 }
 
 //hillclimb key <-> Map class conversion

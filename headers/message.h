@@ -64,7 +64,7 @@ public:
 
 	}
 
-	~Message() {DeleteBuffers(); ClearPatterns(patterns);}
+	~Message() {DeleteBuffers(); }
 
 	void AllocateBuffers(int size) {DeleteBuffers(); cipher=new char[size<<1]; plain=new char[size<<1]; msg_temp=new char[size<<1];}
 	void DeleteBuffers() {if(cipher) delete[] cipher; if(plain) delete[] plain; if(msg_temp) delete[] msg_temp; cipher=plain=msg_temp=NULL;}
@@ -75,15 +75,10 @@ public:
 	void SetCipher(const char*);
 	void SetPlain(char * new_plain) {strcpy(plain,new_plain);}
 
-	void Insert(int,const char*);
-
 	const char * GetCipher() {return cipher;}
 	const char * GetPlain() {return plain;}
 
 	int GetLength() {return msg_len;}
-	int GetRow(int,int,char*);
-	int GetColumn(int,int,char*);
-	int CalcBestWidth(int);
 
 	void SetExpFreq();
 	void GetExpFreq(int*);
@@ -97,11 +92,6 @@ public:
 
 	void MergeSymbols(char,char,int);
 	int Simplify(char*);
-	long SeqHomo(wchar*,char*,float,int);
-	void Flip(int,int);
-	int Rotate(int,int);
-	void SwapColumns(int,int,int);
-	void SwapRows(int,int,int);
 
 	void ToUpper()
 	{
@@ -112,9 +102,7 @@ public:
 	  SetInfo(true);
 	}
 
-	long LetterGraph(wchar*);
 	long PolyKeySize(wchar*,int,float);
-	long RowColIoC(wchar*,int);
 
 	void SetInfo(int set_maps=false);
 	void FindPatterns(int);
@@ -133,8 +121,6 @@ public:
 	//decoding
 	Map cur_map;
 	DiMap digraph_map;
-
-	void AutoExclude();
 
 	void operator += (Message &src_msg)
 	{
@@ -181,6 +167,7 @@ public:
 		return gray;
 	}
 
+/*
 	void Defractionate(int size)
 	{
 		std::string fraction;
@@ -202,6 +189,8 @@ public:
 		msg_temp[msg_len/size]='\0';
 		SetCipher(msg_temp);
 	}
+*/
+
 
 	void Decode()
 	{
@@ -256,14 +245,8 @@ public:
 
 private:
 	//pattern functions
-	int FindPattern(const char*,NGRAM*&,NGRAM*,NGRAM*);
-	int FindPattern(const char*,NGRAM*&);
-	int AddPattern(NGRAM&,int);
-	long ForAllPatterns(NGRAM *,int,void (*do_func)(NGRAM*));
-	void ClearPatterns(NGRAM*);
 
 	void FlipPlainBuffer() {std::swap(plain,msg_temp); msg_temp[0]='\0';}
-	void RotateString(char*,int,int);
 
 	//message data
 	char *cipher, *plain, *msg_temp;
@@ -287,6 +270,4 @@ private:
 	int trans_type; //reading direction of columnar transposition
 };
 
-void SwapStringColumns(char*,int,int,int);
-void SwapStringRows(char*,int,int,int);
 #endif

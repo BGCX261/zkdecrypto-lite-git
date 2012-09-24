@@ -1,15 +1,17 @@
 [Buildset]
-BuildItems=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x00\x00\x00\x01\x00\x00\x00\x1e\x00z\x00k\x00d\x00e\x00c\x00r\x00y\x00p\x00t\x00o\x00-\x00l\x00i\x00t\x00e)
+BuildItems=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x00)
 
 [CMake]
 BuildDirs=/home/solver/projects/zkdecrypto-lite/build
 CMakeDir=/usr/share/cmake/Modules
 Current CMake Binary=file:///usr/bin/cmake
 CurrentBuildDir=file:///home/solver/projects/zkdecrypto-lite/build
-CurrentBuildType=Release
-CurrentInstallDir=file:///usr/local
+CurrentBuildType=Debug
 Extra Arguments=
 ProjectRootRelative=./
 
 [MakeBuilder]
 Number Of Jobs=1
+
+[Project]
+VersionControlSupport=kdevgit

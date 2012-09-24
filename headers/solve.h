@@ -135,34 +135,6 @@ void Reset() //init solve info
 }
 
 
-int LoadDictionary(char *filename, int show_error)
-{
-	FILE *dictionary_file;
-	char word[64];
-	std::string word_str;
-
-	dictionary_file=fopen(filename,"r");
-
-	if(!dictionary_file)
-	{
-		printf("Failed to open %s\n", filename);
-	}
-
-	for(int i=0; !feof(dictionary_file); i++)
-	{
-		fscanf(dictionary_file,"%s",word);
-		for (int j = 0; j < strlen(word); j++)
-		{
-		  if (word[j] >= 97 && word[j] <= 122) word[j] -= 32;
-		}
-		word_str=word;
-		dictionary[word_str]=i;
-	}
-
-	fclose(dictionary_file);
-	return 1;
-}
-
 //set language and load data files
 void SetLanguage()
 {
@@ -198,13 +170,6 @@ void SetLanguage()
 			//SendMessage(hMainWnd,WM_CLOSE,0,0);
 		}
 	}
-
-	dictionary.clear();
-	sprintf(szGraphName,"%s/%s/%s",LANG_DIR,szLang,"dictionary.txt");
-	LoadDictionary(szGraphName,true);
-	sprintf(szGraphName,"%s/%s/%s",LANG_DIR,szLang,"userdict.txt");
-	LoadDictionary(szGraphName,false);
-	siSolveInfo.dict_words=dictionary.size();
 
 	GetUnigraphs(unigraphs);
 	message.cur_map.SetUnigraphs(unigraphs);

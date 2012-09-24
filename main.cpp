@@ -72,7 +72,6 @@ int main (int argc, char** argv)
     siSolveInfo.disp_info=DispInfo;
 
     sprintf(siSolveInfo.log_name,"/%s","log.txt");
-    siSolveInfo.dictionary=&dictionary;
     siSolveInfo.optima_tabu=&tabu_list;
     SetInfo(&siSolveInfo);
     Reset();

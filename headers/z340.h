@@ -43,7 +43,6 @@ struct SOLVEINFO
 	char cribs[512][128];
 	int num_cribs;
 	char log_name[2048];
-	std::map<std::string,int> *dictionary;
 	std::map<std::string,int> *optima_tabu;
 	int dict_words;
 

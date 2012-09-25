@@ -38,8 +38,6 @@ struct SOLVEINFO
 	long max_tabu;
 	int swaps;
 	int max_tol;
-	char *locked;
-	char *exclude;
 	char cribs[512][128];
 	int num_cribs;
 	char log_name[2048];

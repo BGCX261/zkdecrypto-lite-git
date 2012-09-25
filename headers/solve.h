@@ -76,7 +76,6 @@ int FindSolution()
 {
 	int num_symbols;
 	char key[4096];
-	char *exclude=NULL;
 	SYMBOL symbol;
 
 	if(!bMsgLoaded) return 0;
@@ -94,24 +93,16 @@ int FindSolution()
 		//key=program map + additional chars of best key
 		message.cur_map.ToKey(key,siSolveInfo.best_key+num_symbols);
 
-		//setup exclude list
-		exclude=new char[27*num_symbols];
-
 		for(int cur_symbol=0; cur_symbol<num_symbols; cur_symbol++)
 		{
 			message.cur_map.GetSymbol(cur_symbol,&symbol);
-			strcpy(exclude+(27*cur_symbol),symbol.exclude);
 		}
-
-		siSolveInfo.locked=(char*)message.cur_map.GetLocked();
-		siSolveInfo.exclude=exclude;
 
 		hillclimb(message,message.GetCipher(),message.GetLength(),key,false);
 	}
 
 	StopSolve(); //reset window state
 
-	if(exclude) delete[] exclude;
 
 	StopNotify();
 	return 0;

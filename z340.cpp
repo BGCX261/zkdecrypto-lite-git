@@ -147,20 +147,13 @@ int hillclimb(Message &msg, const char cipher[],int clength,char key[],int print
 
         for(p1=0; p1<keylength; p1++) { //do an iteration
 
-            if(info->locked[p1]) continue; //skip if symbol is locked
-
             for(p2=0; p2<keylength; p2++) {
 
                 if(!info->running) goto EXIT; //stop
 
                 if(p1>=cuniq && p2>=cuniq) continue; //skip if both symbols are in the extra letters area
-                if(info->locked[p2] || key[p1]==key[p2]) continue; //skip if symbol is locked or identical
+                if(key[p1]==key[p2]) continue; //skip if symbol is locked or identical
 
-                if(info->exclude) //exclusions
-                {
-                    if(p1<cuniq && strchr(info->exclude+(27*p1),key[p2])) continue;
-                    if(p2<cuniq && strchr(info->exclude+(27*p2),key[p1])) continue;
-                }
 
                 DO_SWAP;
                 TABU_STR_A(key);

@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include "map.h"
-#include "unicode.h"
 #include "strarray.h"
 #include "macros.h"
 #include <string>
@@ -101,8 +100,6 @@ public:
 	  }
 	  SetInfo(true);
 	}
-
-	long PolyKeySize(wchar*,int,float);
 
 	void SetInfo(int set_maps=false);
 	void FindPatterns(int);

@@ -73,10 +73,6 @@ int iPlainX, iPlainY=3*iMargin; //plain wnd position
 int iTextWidth=100, iTextHeight=100; //dimensions of cipher and plain
 int iTextBorder=4;
 
-//graphs
-wchar szGraph[40960];//[20480];
-char szGraphTitle[128];
-long lRowCol;
 
 //solver data
 SOLVEINFO siSolveInfo;

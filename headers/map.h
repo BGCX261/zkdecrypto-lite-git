@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string>
-#include "unicode.h"
 #include "macros.h"
 
 #define MAX_SYM		256

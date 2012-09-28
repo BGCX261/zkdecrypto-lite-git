@@ -16,12 +16,7 @@ class StringArray
 		StringArray() {num_strings=0; Clear();}
 		~StringArray() {Clear();}
 
-		int AddString(const char*);
-		int DeleteString(int);
 		int GetString(int,char*);
-		void SortStrings(int);
-		int RemoveDups();
-		int Intersect(char*,float);
 		int GetNumStrings() {return num_strings;}
 		void Clear();
 	
@@ -32,11 +27,6 @@ class StringArray
 
 int ChrIndex(const char*,char);
 int GetUniques(const char*, char*, int*);
-float IoC(const char*,int);
-float DIoC(const char*,int,int);
-float avg_lsoc(const char*,int);
-void Transform(char*,unsigned long*,int);
-void Reverse(char*);
 
 #endif
 

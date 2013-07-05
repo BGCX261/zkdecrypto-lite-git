@@ -119,6 +119,8 @@ int main (int argc, char** argv)
 
     Solve();
     SaveINI();
+    
+    return siSolveInfo.best_score;
 }
 
 void Solve()

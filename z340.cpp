@@ -47,8 +47,6 @@ void SetInfo(SOLVEINFO *main_info) {
     info=main_info;
 }
 
-FILE *log_file;
-
 #define DO_SWAP		std::swap(key[p1],key[p2]);
 #define DECODE_A	{for(y=0; y<clength; y++) solved[y]=*decoder[(unsigned char)cipher[y]];}
 #define DECODE_B	{msg.SetKey(key); solved=msg.GetPlain();}
@@ -62,8 +60,6 @@ FILE *log_file;
 #define CLEAR_OPTIMA_TABU	info->optima_tabu->clear(); optima_tabu_end=info->optima_tabu->end();
 
 #define SET_SCORE(SCR,DEC)	if(temp_tabu.find(key_str)!=temp_tabu_end || info->optima_tabu->find(key_str)!=optima_tabu_end) SCR=-100000; else {DEC; SCR=calcscore(msg,clength,solved);}
-
-#define LOG_BEST(SCR)		info->get_words(solved); fprintf(log_file,"*****\nScore: %i\t NumWords: %i\t WTF: %i\t\nKEY: %s\nSolution: %s\n\n",SCR,info->num_words,info->stray_letters,key_str.data(),solved); fflush(log_file);
 
 #define CLEAR_TABU_PROB 80
 
@@ -124,7 +120,6 @@ int hillclimb(Message &msg, const char cipher[],int clength,char key[],int print
     strcpy(cur_best_key,key);
     if(info->disp_all) info->disp_all();
 
-    log_file=fopen(info->log_name,"w"); //open log file
     long iterations = 0;
     //printf("%d, %d, %d\n", info->iteration_limit, info->score_limit, info->time_limit);
     //printf("Elapsed %d\n", elapsedTime(info->start_time));
@@ -198,11 +193,6 @@ int hillclimb(Message &msg, const char cipher[],int clength,char key[],int print
             {
                 TABU_STR_A(cur_best_key);
                 ADD_OPTIMA_TABU;
-                if(log_file) {
-                    strcpy(key,cur_best_key);
-                    DECODE_A;
-                    LOG_BEST(cur_best_score);
-                }
                 cur_best_score=-10000;
 
                 if(rand()%2) for(i=0; i<100; i++) shufflekey(key,keylength,cuniq); //random restart
@@ -232,7 +222,6 @@ EXIT:
     printf("%d,%s\n", info->best_score, msg.GetPlain());
     delete solved;
     info->running=0;
-    if(log_file) fclose(log_file);
     return 0;
 }
 

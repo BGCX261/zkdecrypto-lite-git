@@ -1,0 +1,6 @@
+*.h~
+*.cpp~
+CMakeFiles/
+zkdecrypto-lite
+CMakeCache.txt
+cmake_install.cmake

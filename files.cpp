@@ -32,14 +32,12 @@ void NewMessageInfo(char *filename)
 	bMsgLoaded=true;
 	bMapLoaded=false;
 	siSolveInfo.best_key[0]='\0';
-	if(ASCIPHER_TYPE) message.cur_map.AsCipher();
 
 	//setup window
 	bUndo=false;
 
 	//block size
 	int max_block=message.GetLength();
-	if(iSolveType==SOLVE_DBLPLAY) max_block>>=1;
 
 	tabu_list.clear();
 }
@@ -68,7 +66,6 @@ int LoadStringMessage(const char* ciphertext)
 	bMsgLoaded=true;
 	bMapLoaded=false;
 	siSolveInfo.best_key[0]='\0';
-	if(ASCIPHER_TYPE) message.cur_map.AsCipher();
 
 	//setup window
 	bUndo=false;

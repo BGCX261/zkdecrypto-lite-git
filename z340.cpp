@@ -55,10 +55,6 @@ FILE *log_file;
 
 #define TABU_STR_A(KEY)		key_str.assign(KEY,cuniq);
 
-#define TABU_STR_B(KEY)		{if(solve_type==SOLVE_SUBPERM || solve_type==SOLVE_SUBCOL) {key_str.assign(KEY,msg.cur_map.GetNumSymbols()); key_str.append(KEY+split_points[0]);} \
-							else if(solve_type==SOLVE_COLVIG) {key_str.assign(KEY,msg.GetKeyLength()); key_str.append(KEY+split_points[0]);} \
-							else key_str.assign(KEY,use_key_len);}
-
 #define ADD_TEMP_TABU		temp_tabu[key_str]=temp_tabu.size(); temp_tabu_end=temp_tabu.end();
 #define CLEAR_TEMP_TABU		temp_tabu.clear(); temp_tabu_end=temp_tabu.end();
 

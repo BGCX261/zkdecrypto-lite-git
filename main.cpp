@@ -108,7 +108,6 @@ int main (int argc, char** argv)
 
     //language
     iLang=0;
-    LoadINI();
     SetLanguage();
 
 
@@ -120,7 +119,6 @@ int main (int argc, char** argv)
     InitKey();
 
     Solve();
-    SaveINI();
     
     return siSolveInfo.best_score;
 }

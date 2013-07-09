@@ -34,6 +34,25 @@ int Message::Read(const char *filename)
     return msg_len;
 }
 
+int Message::ReadFromString(const char* ciphertext)
+{
+    int size = strlen(ciphertext) + 1;
+    AllocateBuffers(size);
+    
+    for (int i = 0; i < strlen(ciphertext); ++i)
+    {
+      char c = ciphertext[i];
+      if(!IS_ASCII(c) || c==' ') continue;
+        cipher[i]=c;
+    }
+    
+    cipher[size] = '\0';
+    
+    SetInfo(true);
+    
+    return size;
+}
+
 void Message::SetExpFreq() //set expected frequencies
 {
     for(int letter=0; letter<26; letter++)

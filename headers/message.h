@@ -69,6 +69,7 @@ public:
 	void DeleteBuffers() {if(cipher) delete[] cipher; if(plain) delete[] plain; if(msg_temp) delete[] msg_temp; cipher=plain=msg_temp=NULL;}
 
 	int Read(const char*);
+	int ReadFromString(const char* ciphertext);
 	int ReadNumeric(const char*);
 	int Write(const char*);
 	void SetCipher(const char*);

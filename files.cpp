@@ -61,6 +61,26 @@ int LoadMessage(char *filename, int type)
 	return 1;
 }
 
+int LoadStringMessage(const char* ciphertext)
+{
+	//get info
+	siSolveInfo.best_score=0;
+	bMsgLoaded=true;
+	bMapLoaded=false;
+	siSolveInfo.best_key[0]='\0';
+	if(ASCIPHER_TYPE) message.cur_map.AsCipher();
+
+	//setup window
+	bUndo=false;
+
+	//block size
+	int max_block=message.GetLength();
+
+	tabu_list.clear();
+	
+	return 1;
+}
+
 int LoadMap(char *filename)
 {
 	//Map temp_map;

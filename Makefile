@@ -35,22 +35,22 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
-# The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /usr/bin/ccmake
+# Escaping for special characters.
+EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/solver/projects/zkdecrypto-lite
+CMAKE_SOURCE_DIR = /home/duman/zkdecrypto-lite
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/solver/projects/zkdecrypto-lite
+CMAKE_BINARY_DIR = /home/duman/zkdecrypto-lite
 
 #=============================================================================
 # Targets provided globally by CMake.
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running interactive CMake command-line interface..."
+	/usr/bin/cmake -i .
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -69,9 +69,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/solver/projects/zkdecrypto-lite/CMakeFiles /home/solver/projects/zkdecrypto-lite/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/duman/zkdecrypto-lite/CMakeFiles /home/duman/zkdecrypto-lite/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/solver/projects/zkdecrypto-lite/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/duman/zkdecrypto-lite/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -110,6 +110,30 @@ zkdecrypto-lite: cmake_check_build_system
 zkdecrypto-lite/fast:
 	$(MAKE) -f CMakeFiles/zkdecrypto-lite.dir/build.make CMakeFiles/zkdecrypto-lite.dir/build
 .PHONY : zkdecrypto-lite/fast
+
+files.o: files.cpp.o
+.PHONY : files.o
+
+# target to build an object file
+files.cpp.o:
+	$(MAKE) -f CMakeFiles/zkdecrypto-lite.dir/build.make CMakeFiles/zkdecrypto-lite.dir/files.cpp.o
+.PHONY : files.cpp.o
+
+files.i: files.cpp.i
+.PHONY : files.i
+
+# target to preprocess a source file
+files.cpp.i:
+	$(MAKE) -f CMakeFiles/zkdecrypto-lite.dir/build.make CMakeFiles/zkdecrypto-lite.dir/files.cpp.i
+.PHONY : files.cpp.i
+
+files.s: files.cpp.s
+.PHONY : files.s
+
+# target to generate assembly for a file
+files.cpp.s:
+	$(MAKE) -f CMakeFiles/zkdecrypto-lite.dir/build.make CMakeFiles/zkdecrypto-lite.dir/files.cpp.s
+.PHONY : files.cpp.s
 
 main.o: main.cpp.o
 .PHONY : main.o
@@ -183,6 +207,30 @@ message.cpp.s:
 	$(MAKE) -f CMakeFiles/zkdecrypto-lite.dir/build.make CMakeFiles/zkdecrypto-lite.dir/message.cpp.s
 .PHONY : message.cpp.s
 
+solve.o: solve.cpp.o
+.PHONY : solve.o
+
+# target to build an object file
+solve.cpp.o:
+	$(MAKE) -f CMakeFiles/zkdecrypto-lite.dir/build.make CMakeFiles/zkdecrypto-lite.dir/solve.cpp.o
+.PHONY : solve.cpp.o
+
+solve.i: solve.cpp.i
+.PHONY : solve.i
+
+# target to preprocess a source file
+solve.cpp.i:
+	$(MAKE) -f CMakeFiles/zkdecrypto-lite.dir/build.make CMakeFiles/zkdecrypto-lite.dir/solve.cpp.i
+.PHONY : solve.cpp.i
+
+solve.s: solve.cpp.s
+.PHONY : solve.s
+
+# target to generate assembly for a file
+solve.cpp.s:
+	$(MAKE) -f CMakeFiles/zkdecrypto-lite.dir/build.make CMakeFiles/zkdecrypto-lite.dir/solve.cpp.s
+.PHONY : solve.cpp.s
+
 strarray.o: strarray.cpp.o
 .PHONY : strarray.o
 
@@ -206,30 +254,6 @@ strarray.s: strarray.cpp.s
 strarray.cpp.s:
 	$(MAKE) -f CMakeFiles/zkdecrypto-lite.dir/build.make CMakeFiles/zkdecrypto-lite.dir/strarray.cpp.s
 .PHONY : strarray.cpp.s
-
-unicode.o: unicode.cpp.o
-.PHONY : unicode.o
-
-# target to build an object file
-unicode.cpp.o:
-	$(MAKE) -f CMakeFiles/zkdecrypto-lite.dir/build.make CMakeFiles/zkdecrypto-lite.dir/unicode.cpp.o
-.PHONY : unicode.cpp.o
-
-unicode.i: unicode.cpp.i
-.PHONY : unicode.i
-
-# target to preprocess a source file
-unicode.cpp.i:
-	$(MAKE) -f CMakeFiles/zkdecrypto-lite.dir/build.make CMakeFiles/zkdecrypto-lite.dir/unicode.cpp.i
-.PHONY : unicode.cpp.i
-
-unicode.s: unicode.cpp.s
-.PHONY : unicode.s
-
-# target to generate assembly for a file
-unicode.cpp.s:
-	$(MAKE) -f CMakeFiles/zkdecrypto-lite.dir/build.make CMakeFiles/zkdecrypto-lite.dir/unicode.cpp.s
-.PHONY : unicode.cpp.s
 
 z340.o: z340.cpp.o
 .PHONY : z340.o
@@ -255,6 +279,30 @@ z340.cpp.s:
 	$(MAKE) -f CMakeFiles/zkdecrypto-lite.dir/build.make CMakeFiles/zkdecrypto-lite.dir/z340.cpp.s
 .PHONY : z340.cpp.s
 
+zodiac.o: zodiac.cpp.o
+.PHONY : zodiac.o
+
+# target to build an object file
+zodiac.cpp.o:
+	$(MAKE) -f CMakeFiles/zkdecrypto-lite.dir/build.make CMakeFiles/zkdecrypto-lite.dir/zodiac.cpp.o
+.PHONY : zodiac.cpp.o
+
+zodiac.i: zodiac.cpp.i
+.PHONY : zodiac.i
+
+# target to preprocess a source file
+zodiac.cpp.i:
+	$(MAKE) -f CMakeFiles/zkdecrypto-lite.dir/build.make CMakeFiles/zkdecrypto-lite.dir/zodiac.cpp.i
+.PHONY : zodiac.cpp.i
+
+zodiac.s: zodiac.cpp.s
+.PHONY : zodiac.s
+
+# target to generate assembly for a file
+zodiac.cpp.s:
+	$(MAKE) -f CMakeFiles/zkdecrypto-lite.dir/build.make CMakeFiles/zkdecrypto-lite.dir/zodiac.cpp.s
+.PHONY : zodiac.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -264,6 +312,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... zkdecrypto-lite"
+	@echo "... files.o"
+	@echo "... files.i"
+	@echo "... files.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
@@ -273,15 +324,18 @@ help:
 	@echo "... message.o"
 	@echo "... message.i"
 	@echo "... message.s"
+	@echo "... solve.o"
+	@echo "... solve.i"
+	@echo "... solve.s"
 	@echo "... strarray.o"
 	@echo "... strarray.i"
 	@echo "... strarray.s"
-	@echo "... unicode.o"
-	@echo "... unicode.i"
-	@echo "... unicode.s"
 	@echo "... z340.o"
 	@echo "... z340.i"
 	@echo "... z340.s"
+	@echo "... zodiac.o"
+	@echo "... zodiac.i"
+	@echo "... zodiac.s"
 .PHONY : help
 
 

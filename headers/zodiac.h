@@ -1,7 +1,7 @@
 #ifndef _ZODIAC_H
+#define _ZODIAC_H
 
 #include "map.h"
-#include "message.h"
 #include "z340.h"
 #include <map>
 #include <string>
@@ -48,45 +48,43 @@
 #define ALLOW_LOWERCASE (TRANSPOSE_TYPE || iSolveType==SOLVE_CEMOPRTU || iSolveType==SOLVE_SUBPERM || iSolveType==SOLVE_COLVIG)
 
 //cipher/key data & files
-Message message; //cipher & main key
-Message undo_message, redo_message; //undo/redo messages
-int undo_line_size, redo_line_size;
-char szCipherName[1024], szKeyName[1024], szPlainName[1024], szGraphName[1024]; //filenames
-char *szCipherBase, *szKeyBase; //file basenames
-char szLanguage[32];
-int bMsgLoaded=false, bMapLoaded=false, bUndo=false;
-int iNumber, iCurTab;
-char szString[128], szStringTitle[128], szNumberTitle[128]; //word, exclude string
+extern Message message; //cipher & main key
+extern Message undo_message;
+extern Message redo_message; //undo/redo messages
+extern int undo_line_size;
+extern int redo_line_size;
+extern char szCipherName[1024];
+extern char szKeyName[1024];
+extern char szPlainName[1024];
+extern char szGraphName[1024]; //filenames
+
+extern char *szCipherBase;
+extern char *szKeyBase; //file basenames
+extern char szLanguage[32];
+extern int bMsgLoaded;
+extern int bMapLoaded;
+extern int bUndo;
+extern int iNumber;
+extern int iCurTab;
+
+extern char szString[128];
+extern char szStringTitle[128];
+extern char szNumberTitle[128]; //word, exclude string
+
 typedef std::map<std::string,int> STRMAP;
-STRMAP dictionary, tabu_list, word_list;
-
-//GUI data
-
-//text gui
-float iCharSize=1.5; //font size multiplier
-int iLineChars=17, iLines, iDispLines; //text line data
-int iScrollPos, iMaxScroll; //scrollbar
-int iDispStart, iDispEnd; //index of the start/end characters being displayed
-int iMargin=10; //window margin size
-int iCipherX=3*iMargin, iCipherY=3*iMargin; //cipher wnd position
-int iPlainX, iPlainY=3*iMargin; //plain wnd position
-int iTextWidth=100, iTextHeight=100; //dimensions of cipher and plain
-int iTextBorder=4;
+extern STRMAP dictionary, tabu_list, word_list;
 
 
 //solver data
-SOLVEINFO siSolveInfo;
-int iPriority, iLang;
-char szExtraLtr[MAX_EXTRA+1]="";
-int iBruteSymbols, iBatchBestScore;
-char lprgcBatchBestKey[4096];
-int iSolveType=0, iBlockSize=0;
+extern int iPriority;
+extern int iLang;
+extern char szExtraLtr[MAX_EXTRA+1];
+extern int iBruteSymbols;
+extern int iBatchBestScore;
+extern char lprgcBatchBestKey[4096];
+extern int iSolveType;
+extern int iBlockSize;
 
-//open/save file filter
-char szFileFilter[]= 
-	{"Text Files (*.txt)\0" "*.txt;\0"
-	 "All Files (*.*)\0" "*.*\0\0"};
-	
 
 #endif
 

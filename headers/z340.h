@@ -1,11 +1,11 @@
-#pragma once
+#ifndef _Z340_H
+#define _Z340_H
 
 ////////////////
 /// INCLUDES ///
 ////////////////
 
 #include 		<stdio.h>
-#include 		<string.h>
 #include 		<stdlib.h>
 #include 		<time.h>
 #include		<math.h>
@@ -95,3 +95,4 @@ int 			WordPlug(Message&,const char*);
 void			SetInfo(SOLVEINFO*);
 int elapsedTime();
 
+#endif

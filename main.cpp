@@ -34,6 +34,7 @@
 #include "headers/zodiac.h"
 #include "headers/solve.h"
 #include "headers/files.h"
+#include "headers/z340.h"
 
 void DispAll();
 void DispInfo();
@@ -42,6 +43,7 @@ void InitKey();
 
 int initCount[26];
 
+SOLVEINFO siSolveInfo;
 
 int main (int argc, char** argv)
 {
